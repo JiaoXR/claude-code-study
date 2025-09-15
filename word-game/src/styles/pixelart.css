@@ -1,0 +1,325 @@
+/* 魂斗罗像素风样式 */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  /* 魂斗罗配色方案 */
+  --primary-red: #ff3333;
+  --primary-blue: #3366ff;
+  --primary-yellow: #ffcc00;
+  --dark-bg: #1a1a2e;
+  --darker-bg: #16213e;
+  --pixel-border: #0f3460;
+  --text-white: #ffffff;
+  --text-gray: #cccccc;
+  --success-green: #00ff66;
+  --warning-orange: #ff8800;
+  --health-red: #ff0000;
+  --combo-purple: #9933ff;
+}
+
+/* 基础像素风字体 */
+.pixel-font {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  line-height: 1.4;
+  text-rendering: pixelated;
+  image-rendering: pixelated;
+}
+
+/* 像素风容器 */
+.pixel-container {
+  background: var(--dark-bg);
+  border: 4px solid var(--pixel-border);
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.pixel-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    transparent 49%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 51%
+  );
+  background-size: 4px 4px;
+  pointer-events: none;
+}
+
+/* 像素风按钮 */
+.pixel-button {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  padding: 12px 16px;
+  border: 3px solid;
+  border-radius: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(0, 0, 0, 0.1) 51%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  cursor: pointer;
+  transition: all 0.1s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pixel-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.pixel-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* 不同颜色的按钮 */
+.pixel-button.primary {
+  background-color: var(--primary-red);
+  border-color: #cc0000;
+  color: var(--text-white);
+}
+
+.pixel-button.secondary {
+  background-color: var(--primary-blue);
+  border-color: #0033cc;
+  color: var(--text-white);
+}
+
+.pixel-button.success {
+  background-color: var(--success-green);
+  border-color: #00cc33;
+  color: var(--dark-bg);
+}
+
+.pixel-button.warning {
+  background-color: var(--warning-orange);
+  border-color: #cc5500;
+  color: var(--text-white);
+}
+
+/* 像素风卡片 */
+.pixel-card {
+  background: var(--darker-bg);
+  border: 3px solid var(--pixel-border);
+  border-radius: 0;
+  padding: 16px;
+  position: relative;
+  margin: 8px;
+}
+
+.pixel-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    var(--primary-red),
+    var(--primary-yellow),
+    var(--primary-blue)
+  );
+}
+
+/* 血条/进度条 */
+.pixel-health-bar {
+  width: 100%;
+  height: 16px;
+  background: #333;
+  border: 2px solid var(--pixel-border);
+  position: relative;
+  overflow: hidden;
+}
+
+.pixel-health-fill {
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    var(--success-green) 0%,
+    var(--primary-yellow) 70%,
+    var(--health-red) 100%
+  );
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.pixel-health-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 255, 255, 0.1) 2px,
+    rgba(255, 255, 255, 0.1) 4px
+  );
+}
+
+/* 分数显示 */
+.pixel-score {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 16px;
+  color: var(--primary-yellow);
+  text-shadow: 2px 2px 0 #000;
+  animation: scoreGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes scoreGlow {
+  from {
+    text-shadow: 2px 2px 0 #000, 0 0 5px var(--primary-yellow);
+  }
+  to {
+    text-shadow: 2px 2px 0 #000, 0 0 15px var(--primary-yellow);
+  }
+}
+
+/* 连击效果 */
+.pixel-combo {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  color: var(--combo-purple);
+  text-shadow: 2px 2px 0 #000;
+  animation: comboFlash 0.5s ease-in-out;
+}
+
+@keyframes comboFlash {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* 像素风爆炸效果 */
+.pixel-explosion {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: radial-gradient(
+    circle,
+    var(--primary-yellow) 0%,
+    var(--warning-orange) 50%,
+    var(--health-red) 100%
+  );
+  border-radius: 0;
+  animation: explode 0.5s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+/* 像素风输入框 */
+.pixel-input {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  padding: 8px;
+  background: var(--darker-bg);
+  border: 2px solid var(--pixel-border);
+  border-radius: 0;
+  color: var(--text-white);
+  outline: none;
+}
+
+.pixel-input:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 8px rgba(51, 102, 255, 0.5);
+}
+
+/* 像素风模态框 */
+.pixel-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--dark-bg);
+  border: 4px solid var(--primary-red);
+  border-radius: 0;
+  padding: 24px;
+  z-index: 1000;
+  animation: modalAppear 0.3s ease-out;
+}
+
+@keyframes modalAppear {
+  from {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.pixel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+}
+
+/* 像素风网格背景 */
+.pixel-grid-bg {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .pixel-font {
+    font-size: 10px;
+  }
+  
+  .pixel-button {
+    font-size: 8px;
+    padding: 8px 12px;
+  }
+  
+  .pixel-score {
+    font-size: 14px;
+  }
+}
+
+/* 禁用文本选择和拖拽 */
+.pixel-no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
