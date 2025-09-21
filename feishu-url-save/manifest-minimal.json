@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "鼠标抖动测试插件",
+  "version": "0.0.1",
+  "description": "绝对最小的测试插件，只用于确认是否是扩展导致的抖动",
+  "permissions": [],
+  "action": {
+    "default_popup": "popup-minimal.html"
+  }
+}

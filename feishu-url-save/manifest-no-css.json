@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "飞书收藏插件（无CSS测试版）",
+  "version": "1.0.2",
+  "description": "测试CSS样式是否导致鼠标抖动",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.feishu.cn/*",
+    "https://*.larksuite.com/*"
+  ],
+  "action": {
+    "default_popup": "popup-no-css.html",
+    "default_title": "飞书收藏（无CSS测试）"
+  },
+  "background": {
+    "service_worker": "background-clean.js"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "飞书收藏插件（优化版）",
+  "version": "2.0.0",
+  "description": "将网页收藏同步到飞书多维表格，支持备注和标签管理（高性能、无抖动版本）",
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "https://open.feishu.cn/*"
+  ],
+
+  "background": {
+    "service_worker": "background/background-optimized.js",
+    "type": "module"
+  },
+
+  "action": {
+    "default_popup": "popup/popup-optimized.html",
+    "default_title": "飞书收藏",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "options_page": "options/options.html",
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

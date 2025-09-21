@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>飞书收藏</title>
+  <link rel="stylesheet" href="popup-optimized.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 头部 -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">📚</span>
+        <span class="title">飞书收藏</span>
+      </div>
+      <button id="settingsBtn" class="settings-btn" title="设置">
+        ⚙️
+      </button>
+    </header>
+
+    <!-- 主要内容 -->
+    <main class="main">
+      <!-- 页面信息 -->
+      <section class="page-info">
+        <div id="pageTitle" class="page-title">正在获取页面信息...</div>
+        <div id="pageUrl" class="page-url"></div>
+      </section>
+
+      <!-- 收藏表单 -->
+      <form id="bookmarkForm" class="bookmark-form">
+        <!-- 网站地址（自动填充，隐藏） -->
+        <input type="hidden" id="urlInput">
+
+        <!-- 网站说明 -->
+        <div class="form-group">
+          <label for="descriptionInput">网站说明 *</label>
+          <input 
+            type="text" 
+            id="descriptionInput" 
+            placeholder="简要描述这个网站..."
+            maxlength="200"
+            required>
+          <small class="field-help">网站的简要说明（必填）</small>
+        </div>
+
+        <!-- 网站备注 -->
+        <div class="form-group">
+          <label for="noteInput">网站备注</label>
+          <textarea 
+            id="noteInput" 
+            placeholder="添加详细的备注信息..."
+            maxlength="500"
+            rows="3"></textarea>
+          <div class="char-count">
+            <span id="charCount">0</span>/500 字符
+          </div>
+        </div>
+
+        <!-- 标签分类 -->
+        <div class="form-group">
+          <label for="categorySelect">标签 *</label>
+          <select id="categorySelect" required>
+            <option value="">请选择分类</option>
+            <option value="AI编程">AI编程</option>
+            <option value="AI工具">AI工具</option>
+            <option value="其他">其他</option>
+          </select>
+          <small class="field-help">选择合适的分类标签</small>
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="form-actions">
+          <button type="submit" id="saveBtn" class="btn btn-primary">
+            💾 保存收藏
+          </button>
+        </div>
+      </form>
+
+      <!-- 快速操作 -->
+      <div class="quick-actions">
+        <button id="quickSaveBtn" class="quick-btn">
+          <span class="icon">⚡</span>
+          <span>快速收藏</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- 加载遮罩 -->
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">处理中...</div>
+    </div>
+
+    <!-- 成功提示 -->
+    <div id="successToast" class="success-toast">
+      <span class="toast-icon">✅</span>
+      <span class="toast-text">操作成功</span>
+    </div>
+
+    <!-- 错误提示 -->
+    <div id="errorToast" class="error-toast">
+      <span class="toast-icon">❌</span>
+      <span class="toast-text">操作失败</span>
+    </div>
+  </div>
+
+  <script src="popup-optimized.js"></script>
+</body>
+</html>

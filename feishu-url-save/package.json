@@ -1,0 +1,39 @@
+{
+  "name": "feishu-bookmark-extension",
+  "version": "1.0.0",
+  "description": "将网页收藏同步到飞书多维表格的浏览器扩展插件",
+  "main": "manifest.json",
+  "scripts": {
+    "build": "npm run clean && npm run copy-files",
+    "clean": "rm -rf dist/",
+    "copy-files": "mkdir -p dist && cp -r popup/ background/ content/ options/ assets/ *.json *.md dist/",
+    "package": "npm run build && cd dist && zip -r ../feishu-bookmark-extension-v$npm_package_version.zip .",
+    "dev": "npm run copy-files && echo '开发环境准备完成，请在Chrome中加载dist目录'",
+    "test": "echo '请在浏览器中打开test.html进行功能测试'",
+    "validate": "node scripts/validate-manifest.js"
+  },
+  "keywords": [
+    "chrome-extension",
+    "bookmark",
+    "feishu",
+    "productivity",
+    "browser-extension"
+  ],
+  "author": "飞书收藏插件开发团队",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/feishu-bookmark-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/feishu-bookmark-extension/issues"
+  },
+  "homepage": "https://github.com/your-username/feishu-bookmark-extension#readme",
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "Chrome >= 88"
+  ]
+}

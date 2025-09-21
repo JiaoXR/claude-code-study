@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "飞书收藏插件（干净测试版）",
+  "version": "1.0.1",
+  "description": "极简版本，用于测试鼠标抖动问题修复",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.feishu.cn/*",
+    "https://*.larksuite.com/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "飞书收藏（测试版）"
+  },
+  "background": {
+    "service_worker": "background-clean.js"
+  },
+  "options_page": "options/options.html"
+}

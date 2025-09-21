@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>调试极简版本</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            width: 350px;
+            height: 400px;
+            font-family: Arial, sans-serif;
+        }
+        
+        .debug-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        
+        #debugOutput {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f5f5f5;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-section">
+        <h3>鼠标抖动调试</h3>
+        <button id="testBtn">测试按钮</button>
+        <button id="clearBtn">清理日志</button>
+    </div>
+    
+    <div class="debug-section">
+        <h4>调试输出</h4>
+        <div id="debugOutput"></div>
+    </div>
+
+    <script>
+        class MinimalDebugger {
+            constructor() {
+                this.timers = [];
+                this.eventListeners = [];
+                this.isDestroyed = false;
+                this.debugOutput = document.getElementById('debugOutput');
+                this.init();
+            }
+
+            init() {
+                this.log('初始化极简调试器');
+                this.setupEventListeners();
+                this.setupCleanup();
+            }
+
+            setupEventListeners() {
+                const testBtn = document.getElementById('testBtn');
+                const clearBtn = document.getElementById('clearBtn');
+                
+                this.addEventListenerSafe(testBtn, 'click', () => {
+                    this.log('测试按钮被点击');
+                    this.testTimer();
+                });
+                
+                this.addEventListenerSafe(clearBtn, 'click', () => {
+                    this.debugOutput.innerHTML = '';
+                });
+            }
+
+            setupCleanup() {
+                const handleCleanup = () => {
+                    this.log('触发清理机制');
+                    this.cleanup();
+                };
+
+                this.addEventListenerSafe(window, 'beforeunload', handleCleanup);
+                this.addEventListenerSafe(window, 'pagehide', handleCleanup);
+                this.addEventListenerSafe(window, 'blur', handleCleanup);
+                this.addEventListenerSafe(document, 'visibilitychange', () => {
+                    if (document.hidden) {
+                        this.log('页面变为隐藏状态');
+                        this.cleanup();
+                    }
+                });
+            }
+
+            addEventListenerSafe(element, event, handler) {
+                if (!element || this.isDestroyed) return;
+                
+                element.addEventListener(event, handler);
+                this.eventListeners.push({ element, event, handler });
+                this.log(`添加事件监听器: ${event}`);
+            }
+
+            testTimer() {
+                const timerId = this.safeSetTimeout(() => {
+                    this.log('定时器执行完成');
+                    // 故意不做任何DOM操作，只记录日志
+                }, 1000);
+                
+                this.log(`创建测试定时器: ${timerId}`);
+            }
+
+            safeSetTimeout(callback, delay) {
+                if (this.isDestroyed) {
+                    this.log('尝试创建定时器但已销毁，已忽略');
+                    return null;
+                }
+                
+                const timerId = setTimeout(() => {
+                    if (this.isDestroyed) {
+                        this.log('定时器执行时已销毁，已忽略');
+                        return;
+                    }
+                    
+                    try {
+                        callback();
+                    } catch (error) {
+                        this.log('定时器回调执行失败: ' + error.message);
+                    }
+                    
+                    const index = this.timers.indexOf(timerId);
+                    if (index > -1) {
+                        this.timers.splice(index, 1);
+                    }
+                    this.log(`定时器${timerId}已完成并移除，剩余:${this.timers.length}`);
+                }, delay);
+                
+                this.timers.push(timerId);
+                this.log(`创建定时器${timerId}，当前总数:${this.timers.length}`);
+                return timerId;
+            }
+
+            cleanup() {
+                if (this.isDestroyed) {
+                    this.log('重复调用cleanup，已忽略');
+                    return;
+                }
+                
+                this.isDestroyed = true;
+                this.log('开始清理资源...');
+                
+                // 清理定时器
+                this.log(`清理${this.timers.length}个定时器`);
+                this.timers.forEach(timerId => {
+                    clearTimeout(timerId);
+                    this.log(`清理定时器${timerId}`);
+                });
+                this.timers = [];
+
+                // 移除事件监听器
+                this.log(`移除${this.eventListeners.length}个事件监听器`);
+                this.eventListeners.forEach(({ element, event, handler }) => {
+                    try {
+                        if (element && element.removeEventListener) {
+                            element.removeEventListener(event, handler);
+                            this.log(`移除事件监听器: ${event}`);
+                        }
+                    } catch (e) {
+                        this.log('移除事件监听器失败: ' + e.message);
+                    }
+                });
+                this.eventListeners = [];
+
+                this.log('资源清理完成');
+            }
+
+            log(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.textContent = `[${timestamp}] ${message}`;
+                this.debugOutput.appendChild(logEntry);
+                this.debugOutput.scrollTop = this.debugOutput.scrollHeight;
+                
+                // 同时输出到控制台
+                console.log(`[MINIMAL-DEBUG] ${message}`);
+            }
+        }
+
+        // 初始化调试器
+        document.addEventListener('DOMContentLoaded', () => {
+            new MinimalDebugger();
+        });
+    </script>
+</body>
+</html>

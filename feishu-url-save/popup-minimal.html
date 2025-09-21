@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>抖动测试</title>
+    <style>
+        body {
+            width: 300px;
+            height: 200px;
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: white;
+        }
+        
+        .test-area {
+            border: 2px solid #ccc;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background: #f5f5f5;
+        }
+        
+        #status {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h3>鼠标抖动测试</h3>
+    
+    <div class="test-area">
+        <p>这是一个绝对最小的扩展测试</p>
+        <button onclick="showMessage()">点击测试</button>
+    </div>
+    
+    <div id="status">
+        状态: 初始化完成<br>
+        请移动鼠标离开此窗口测试是否抖动
+    </div>
+
+    <script>
+        // 绝对最小的JavaScript，不使用任何Chrome API
+        console.log('最小测试插件加载完成');
+        
+        function showMessage() {
+            document.getElementById('status').innerHTML = 
+                '状态: 按钮已点击<br>' +
+                '时间: ' + new Date().toLocaleTimeString() + '<br>' +
+                '请移动鼠标测试抖动';
+        }
+        
+        // 不添加任何事件监听器，不使用任何定时器
+        // 完全静态的页面
+    </script>
+</body>
+</html>

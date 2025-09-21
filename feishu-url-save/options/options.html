@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>飞书收藏插件 - 设置</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 头部 -->
+    <header class="header">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">📚</div>
+          <div class="title-group">
+            <h1 class="title">飞书收藏插件</h1>
+            <p class="subtitle">将网页收藏同步到飞书多维表格</p>
+          </div>
+        </div>
+        <div class="version">v1.0.0</div>
+      </div>
+    </header>
+
+    <!-- 导航标签 -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="basic">基础设置</button>
+      <button class="tab-btn" data-tab="advanced">高级设置</button>
+      <button class="tab-btn" data-tab="sync">同步管理</button>
+      <button class="tab-btn" data-tab="about">关于</button>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="main">
+      <!-- 基础设置 -->
+      <div class="tab-content active" id="basic">
+        <div class="section">
+          <h2 class="section-title">飞书应用配置</h2>
+          <p class="section-desc">配置飞书开放平台应用信息以启用同步功能</p>
+          
+          <form class="settings-form" id="basicForm">
+            <div class="form-group">
+              <label for="appToken">应用令牌 (App Token) *</label>
+              <input 
+                type="text" 
+                id="appToken" 
+                placeholder="请输入飞书多维表格的应用令牌"
+                required
+              >
+              <small class="field-help">
+                在飞书多维表格中，点击右上角的"..."→ "高级" → "开放平台" 获取
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="tableId">数据表ID *</label>
+              <input 
+                type="text" 
+                id="tableId" 
+                placeholder="请输入要同步到的数据表ID"
+                required
+              >
+              <small class="field-help">
+                在数据表标签上右键，选择"复制表格ID"
+              </small>
+            </div>
+
+            <div class="form-group">
+              <label for="accessToken">访问令牌 (Access Token) *</label>
+              <input 
+                type="password" 
+                id="accessToken" 
+                placeholder="请输入访问令牌"
+                required
+              >
+              <small class="field-help">
+                从飞书开放平台获取的应用访问令牌
+              </small>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" id="testConnectionBtn">
+                测试连接
+              </button>
+              <button type="submit" class="btn btn-primary">
+                保存设置
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">默认设置</h2>
+          <p class="section-desc">配置收藏时的默认选项</p>
+          
+          <div class="form-group">
+            <label for="categoriesInfo">收藏分类</label>
+            <div class="categories-info">
+              <div class="category-item">
+                <strong>AI编程</strong>: GitHub、编程工具、开发相关网站
+              </div>
+              <div class="category-item">
+                <strong>AI工具</strong>: ChatGPT、AI助手、AI应用网站
+              </div>
+              <div class="category-item">
+                <strong>其他</strong>: 不属于上述分类的其他网站
+              </div>
+            </div>
+            <small class="field-help">
+              插件会根据网站内容智能选择合适的分类
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="autoSync">
+              <span class="checkmark"></span>
+              自动同步到飞书
+            </label>
+            <small class="field-help">
+              启用后，收藏将立即同步到飞书多维表格
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="enableNotifications">
+              <span class="checkmark"></span>
+              启用通知
+            </label>
+            <small class="field-help">
+              收藏成功或失败时显示桌面通知
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- 高级设置 -->
+      <div class="tab-content" id="advanced">
+        <div class="section">
+          <h2 class="section-title">同步设置</h2>
+          
+          <div class="form-group">
+            <label for="syncInterval">同步间隔（分钟）</label>
+            <input 
+              type="number" 
+              id="syncInterval" 
+              min="1" 
+              max="60" 
+              value="5"
+            >
+            <small class="field-help">
+              自动重试失败同步的时间间隔
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="maxRetries">最大重试次数</label>
+            <input 
+              type="number" 
+              id="maxRetries" 
+              min="1" 
+              max="10" 
+              value="3"
+            >
+            <small class="field-help">
+              同步失败时的最大重试次数
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="debugMode">
+              <span class="checkmark"></span>
+              调试模式
+            </label>
+            <small class="field-help">
+              启用后将在控制台输出详细的调试信息
+            </small>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">数据管理</h2>
+          
+          <div class="form-group">
+            <label for="dataRetention">本地数据保留天数</label>
+            <input 
+              type="number" 
+              id="dataRetention" 
+              min="7" 
+              max="365" 
+              value="30"
+            >
+            <small class="field-help">
+              已同步的收藏在本地保留的天数，超过后自动清理
+            </small>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-warning" id="clearDataBtn">
+              清除所有本地数据
+            </button>
+            <button type="button" class="btn btn-secondary" id="exportDataBtn">
+              导出收藏数据
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 同步管理 -->
+      <div class="tab-content" id="sync">
+        <div class="section">
+          <h2 class="section-title">同步状态</h2>
+          
+          <div class="sync-stats" id="syncStats">
+            <div class="stat-card">
+              <div class="stat-value" id="totalBookmarks">0</div>
+              <div class="stat-label">总收藏数</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="syncedBookmarks">0</div>
+              <div class="stat-label">已同步</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" id="unsyncedBookmarks">0</div>
+              <div class="stat-label">未同步</div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-primary" id="retryAllBtn">
+              重试所有未同步
+            </button>
+            <button type="button" class="btn btn-secondary" id="refreshStatsBtn">
+              刷新状态
+            </button>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 class="section-title">同步历史</h2>
+          
+          <div class="sync-log" id="syncLog">
+            <p class="empty-message">暂无同步记录</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 关于 -->
+      <div class="tab-content" id="about">
+        <div class="section">
+          <h2 class="section-title">关于插件</h2>
+          
+          <div class="about-content">
+            <p>
+              <strong>飞书收藏插件</strong> 是一个浏览器扩展程序，帮助您将网页收藏同步到飞书多维表格中，
+              方便统一管理和二次处理收藏内容。
+            </p>
+            
+            <h3>主要功能</h3>
+            <ul>
+              <li>一键收藏网页到飞书多维表格</li>
+              <li>支持添加备注和标签</li>
+              <li>智能标签建议</li>
+              <li>自动同步或手动同步</li>
+              <li>同步状态管理</li>
+            </ul>
+
+            <h3>使用指南</h3>
+            <ol>
+              <li>在飞书中创建一个多维表格</li>
+              <li>获取应用令牌和数据表ID</li>
+              <li>在设置页面配置相关信息</li>
+              <li>点击浏览器工具栏中的插件图标开始收藏</li>
+            </ol>
+
+            <div class="links">
+              <a href="#" class="link" id="helpLink">使用帮助</a>
+              <a href="#" class="link" id="feedbackLink">问题反馈</a>
+              <a href="#" class="link" id="updateLink">检查更新</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 状态提示 -->
+    <div class="toast" id="toast"></div>
+
+    <!-- 加载遮罩 -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">处理中...</div>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>
