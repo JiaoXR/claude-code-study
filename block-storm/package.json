@@ -1,0 +1,20 @@
+{
+  "name": "block-storm",
+  "version": "1.0.0",
+  "description": "炫酷的俄罗斯方块游戏",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'Static site, no build needed'",
+    "start": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "tetris",
+    "game",
+    "html5",
+    "canvas",
+    "javascript"
+  ],
+  "author": "Block Storm Team",
+  "license": "MIT"
+}
